@@ -8,8 +8,9 @@ class Topic(models.Model):
         return self.text
 
 class SubTopic(models.Model):
-    topic = models.ForeignKey(
-        Topic, related_name='subtopics', on_delete=models.CASCADE)
+    topic = models.ForeignKey(Topic, 
+                              related_name='subtopics', 
+                              on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
 
     def __str__(self):
@@ -21,12 +22,15 @@ class CardQuestion(models.Model):
         # ('FB', 'Fill in the Blanks'),
     ]
 
-    subtopic = models.ForeignKey(
-        SubTopic, related_name='cards', on_delete=models.CASCADE)
+    subtopic = models.ForeignKey(SubTopic, 
+                                 related_name='cards', 
+                                 on_delete=models.CASCADE)
     text = models.TextField()
-    question_type = models.CharField(
-        max_length=2, choices=QUESTION_TYPES, default='MC')
-    resource = models.ForeignKey('Resource', related_name='questions', 
+    question_type = models.CharField(max_length=2, 
+                                     choices=QUESTION_TYPES, 
+                                     default='MC')
+    resource = models.ForeignKey('Resource', 
+                                 related_name='questions', 
                                  null=True, blank=True, 
                                  on_delete=models.SET_NULL)
 
@@ -35,8 +39,9 @@ class CardQuestion(models.Model):
                 f"{self.subtopic.text} > {self.text}")
 
 class Choice(models.Model):
-    question = models.ForeignKey(
-        CardQuestion, related_name='choices', on_delete=models.CASCADE)
+    question = models.ForeignKey(CardQuestion, 
+                                 related_name='choices', 
+                                 on_delete=models.CASCADE)
     text = models.CharField(max_length=200)
     is_correct = models.BooleanField(default=False)
 
@@ -47,8 +52,10 @@ class Choice(models.Model):
                 f"{'Correct' if self.is_correct else 'Incorrect'}")
 
 class Resource(models.Model):
-    subtopic = models.ForeignKey(
-        SubTopic, related_name='resources', null=True, on_delete=models.CASCADE)
+    subtopic = models.ForeignKey(SubTopic, 
+                                 related_name='resources', 
+                                 null=True, 
+                                 on_delete=models.SET_NULL)
     title = models.CharField(max_length=200)
     content = models.TextField()
 
