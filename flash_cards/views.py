@@ -26,6 +26,7 @@ def new_topic(request):
         form = TopicForm()
     else:
         # POST data submitted; process data
+        form = TopicForm(data=request.POST)
         if form.is_valid():
             form.save()
             return redirect('flash_cards:topics')
