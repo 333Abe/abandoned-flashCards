@@ -1,0 +1,15 @@
+{% extends "flash_cards/base.html" %}
+
+{% block content %}
+
+<h1>Subtopics</h1>
+
+<ul>
+    {% for subtopic in subtopics %}
+        <li>{{ subtopic }}</li>
+    {% empty %}
+        <li>No subtopics have been added yet</li>
+    {% endfor %}
+</ul>
+
+{% endblock content %}
