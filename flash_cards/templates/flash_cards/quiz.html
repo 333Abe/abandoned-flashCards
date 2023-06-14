@@ -1,0 +1,19 @@
+{% extends "flash_cards/base.html" %} {% block content %}
+<h1>Quiz</h1>
+<form action="{% url 'flash_cards:results' %}" method="post">
+  {% csrf_token %}
+  {% for question in questions %}
+    <p>{{ question.text }}</p>
+    {% for choice in question.choices.all %}
+      <input type="checkbox" name="answers_{{ question.id }}" value="{{ choice.text }}" />
+      {{ choice.text }}<br />
+      {% empty %}
+      <p>No answers available for this question</p>
+    {% endfor %}
+  {% empty %}
+    <p>No questions available for these topics</p>
+  {% endfor %}
+
+  <input type="submit" value="Submit answers" />
+</form>
+{% endblock content %}
