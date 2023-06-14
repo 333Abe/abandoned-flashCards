@@ -1,0 +1,10 @@
+{% extends "flash_cards/base.html" %}
+{% block content %}
+    {% for result in results %}
+        <p>{{ result.question_text }}</p>
+        {% for choice in result.choices %}
+            {{ choice.text }} {{ choice.marking }} <br>
+        {% endfor %}
+    {% endfor %}
+    <p>SCORE: {{ total_score }} / {{ max_possible_score }}</p>
+{% endblock content %}
