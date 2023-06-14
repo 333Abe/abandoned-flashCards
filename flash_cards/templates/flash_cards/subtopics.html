@@ -3,13 +3,19 @@
 {% block content %}
 
 <h1>Subtopics</h1>
-
-<ul>
+<form action="{% url 'flash_cards:start_quiz' %}" method="post">
+    {% csrf_token %}
+   <ul>
     {% for subtopic in subtopics %}
+        <input type="checkbox" name="subtopics" value="{{ subtopic.id }}">
         <li>{{ subtopic }}</li>
     {% empty %}
         <li>No subtopics have been added yet</li>
     {% endfor %}
 </ul>
+<input type="submit" value="Start Quiz">
+</form>
+
+<a href="{% url 'flash_cards:new_subtopic' topic.id %}">Add a new subtopic</a>
 
 {% endblock content %}
